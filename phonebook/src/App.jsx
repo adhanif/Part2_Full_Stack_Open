@@ -11,6 +11,14 @@ function App() {
 
   const addPerson = (e) => {
     e.preventDefault();
+
+    const findName = persons.find((person) => {
+      return person.name === newName;
+    });
+    if (findName) {
+      alert(`${newName} is already added to phonebook`);
+      return;
+    }
     const personObj = {
       name: newName,
     };
