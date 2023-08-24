@@ -4,7 +4,7 @@ export default function Course({ course }) {
   const total = course.parts.reduce((acc, curr) => {
     return acc + curr.exercises;
   }, 0);
-  console.log(total);
+
   return (
     <div>
       <h1>{course.name}</h1>
