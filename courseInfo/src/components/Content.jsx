@@ -1,11 +1,11 @@
 import React from "react";
 import Part from "./Part";
 
-export default function Content({ course }) {
+export default function Content({ parts }) {
   return (
     <div>
-      {course &&
-        course.parts.map((part) => {
+      {parts &&
+        parts.map((part) => {
           return <Part part={part} key={part.id} />;
         })}
     </div>

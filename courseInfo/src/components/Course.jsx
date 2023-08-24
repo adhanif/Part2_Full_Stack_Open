@@ -1,17 +1,18 @@
 import React from "react";
 import Header from "./Header";
 import Content from "./Content";
+import Total from "./Total";
 
-export default function Course({ course }) {
-  const total = course.parts.reduce((acc, curr) => {
-    return acc + curr.exercises;
-  }, 0);
-
+export default function Course({ courses }) {
   return (
     <div>
-      <Header heading={course.name} />
-      <Content course={course} />
-      <h4>total of {total} exercises</h4>
+      {courses.map((course) => (
+        <React.Fragment key={course.id}>
+          <Header heading={course.name} />
+          <Content parts={course.parts} />
+          <Total parts={course.parts} />
+        </React.Fragment>
+      ))}
     </div>
   );
 }
