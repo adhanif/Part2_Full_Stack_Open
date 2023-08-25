@@ -1,7 +1,7 @@
 import React from "react";
 import axiosClient from "../services/axiosClient";
 
-export default function Persons({ keyWord, persons }) {
+export default function Persons({ keyWord, persons, setPersons }) {
   const personsToShow = !keyWord
     ? persons
     : persons.filter((person) =>
@@ -13,7 +13,9 @@ export default function Persons({ keyWord, persons }) {
     if (confirmed) {
       axiosClient
         .Delete(id)
-        .then(() => {})
+        .then((returnedData) => {
+          setPersons(returnedData.data);
+        })
         .catch((err) => {
           console.log(err);
         });

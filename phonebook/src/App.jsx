@@ -48,7 +48,7 @@ function App() {
       />
 
       <h2>Numbers</h2>
-      <Persons keyWord={keyWord} persons={persons} />
+      <Persons keyWord={keyWord} setPersons={setPersons} persons={persons} />
     </div>
   );
 }
