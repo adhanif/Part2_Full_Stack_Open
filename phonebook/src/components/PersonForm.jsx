@@ -15,19 +15,43 @@ export default function PersonForm({
   const addPerson = (e) => {
     e.preventDefault();
 
-    newName === ""
-      ? alert("Please enter a Name")
-      : newNumber === ""
-      ? alert("Please enter a phone number")
-      : newNumber;
+    if (newName === "") {
+      alert("Please enter a Name");
+      return;
+    } else if (newNumber === "") {
+      alert("Please enter a phone number");
+      return;
+    }
 
     const findName = persons.find((person) => {
       return person.name === newName;
     });
 
     if (findName) {
-      alert(`${newName} is already added to phonebook`);
-      return;
+      // console.log(findName);
+      const confirmed = window.confirm(
+        `${newName} is already added to phonebook, do you want to replace the old number with a new one?`
+      );
+      if (confirmed) {
+        axiosClient
+          .update(findName.id, { name: newName, number: newNumber })
+          .then((res) => {
+            const updatedPersons = persons.map((oldperson) =>
+              oldperson.id != findName.id ? oldperson : res.data
+            );
+            setPersons(updatedPersons);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        setNewName("");
+        setNewNumber("");
+        return;
+      } else if (!confirmed) {
+        setNewName("");
+        setNewNumber("");
+        return;
+      }
     }
 
     const personObj = {

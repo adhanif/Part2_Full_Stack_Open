@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 import axiosClient from "./services/axiosClient";
 
 function App() {
-  const [notes, setNotes] = useState([]);
   const [persons, setPersons] = useState();
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
@@ -17,7 +16,7 @@ function App() {
     axiosClient.getAll().then((response) => {
       setPersons(response.data);
     });
-  }, [persons]);
+  }, []);
 
   const handleName = (e) => {
     setNewName(e.target.value);
