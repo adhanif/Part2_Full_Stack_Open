@@ -12,7 +12,7 @@ export default function Persons({ keyWord, persons }) {
       {personsToShow &&
         personsToShow.map((person) => {
           return (
-            <p style={{ margin: "0px" }} key={person.name}>
+            <p style={{ margin: "0px" }} key={person.id}>
               {person.name} {person.number}
             </p>
           );

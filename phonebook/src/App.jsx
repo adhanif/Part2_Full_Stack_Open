@@ -3,7 +3,8 @@ import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 import { useState, useEffect } from "react";
-import axios from "axios";
+
+import axiosClient from "./services/axiosClient";
 
 function App() {
   const [notes, setNotes] = useState([]);
@@ -13,13 +14,10 @@ function App() {
   const [keyWord, setKeyWord] = useState("");
 
   useEffect(() => {
-    console.log("effect");
-    axios.get("http://localhost:3001/persons").then((response) => {
-      console.log("promise fulfilled");
+    axiosClient.getAll().then((response) => {
       setPersons(response.data);
     });
   }, []);
-  console.log("render", notes.length, "notes");
 
   const handleName = (e) => {
     setNewName(e.target.value);

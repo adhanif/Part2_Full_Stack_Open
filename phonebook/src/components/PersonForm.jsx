@@ -1,4 +1,6 @@
 import React from "react";
+import axios from "axios";
+import axiosClient from "../services/axiosClient";
 
 export default function PersonForm({
   handleName,
@@ -32,7 +34,15 @@ export default function PersonForm({
       name: newName,
       number: newNumber,
     };
-    setPersons([...persons, personObj]);
+
+    axiosClient
+      .create(personObj)
+      .then((res) => {
+        setPersons([...persons, res.data]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     setNewName("");
     setNewNumber("");
   };
