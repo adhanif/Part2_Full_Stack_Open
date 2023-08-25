@@ -17,7 +17,7 @@ function App() {
     axiosClient.getAll().then((response) => {
       setPersons(response.data);
     });
-  }, []);
+  }, [persons]);
 
   const handleName = (e) => {
     setNewName(e.target.value);
