@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import axiosClient from "../services/axiosClient";
+// import NotificationError from "./NotificationError"
 
 export default function PersonForm({
   handleName,
@@ -11,6 +12,7 @@ export default function PersonForm({
   setNewName,
   setPersons,
   setNewNumber,
+  setErrorMessage,
 }) {
   const addPerson = (e) => {
     e.preventDefault();
@@ -37,9 +39,13 @@ export default function PersonForm({
           .update(findName.id, { name: newName, number: newNumber })
           .then((res) => {
             const updatedPersons = persons.map((oldperson) =>
-              oldperson.id != findName.id ? oldperson : res.data
+              oldperson.id != findName.id ? oldperson : res
             );
             setPersons(updatedPersons);
+            setErrorMessage(`${res.name}'s phonenumber has been updated`);
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 3000);
           })
           .catch((err) => {
             console.log(err);
@@ -62,7 +68,12 @@ export default function PersonForm({
     axiosClient
       .create(personObj)
       .then((res) => {
-        setPersons([...persons, res.data]);
+        // console.log(res);
+        setPersons([...persons, res]);
+        setErrorMessage(`${res.name} is created`);
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 3000);
       })
       .catch((err) => {
         console.log(err);

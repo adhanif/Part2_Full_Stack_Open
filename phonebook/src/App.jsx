@@ -3,18 +3,19 @@ import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
 import { useState, useEffect } from "react";
-
 import axiosClient from "./services/axiosClient";
+import NotificationError from "./components/NotificationError";
 
 function App() {
   const [persons, setPersons] = useState();
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [keyWord, setKeyWord] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     axiosClient.getAll().then((response) => {
-      setPersons(response.data);
+      setPersons(response);
     });
   }, []);
 
@@ -33,6 +34,7 @@ function App() {
   return (
     <div>
       <h2>Phonebook</h2>
+      <NotificationError message={errorMessage} />
       <Filter keyWord={keyWord} handlekeyWord={handlekeyWord} />
       <h1>add a new Number</h1>
 
@@ -45,6 +47,7 @@ function App() {
         setPersons={setPersons}
         setNewName={setNewName}
         setNewNumber={setNewNumber}
+        setErrorMessage={setErrorMessage}
       />
 
       <h2>Numbers</h2>
