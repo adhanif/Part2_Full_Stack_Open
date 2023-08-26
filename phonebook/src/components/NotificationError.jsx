@@ -5,5 +5,5 @@ export default function NotificationError({ message }) {
     return null;
   }
 
-  return <div className="error">{message}</div>;
+  return <div className={`${message ? "error" : ""}`}>{message}</div>;
 }
