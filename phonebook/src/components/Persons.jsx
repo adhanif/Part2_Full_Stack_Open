@@ -14,7 +14,8 @@ export default function Persons({ keyWord, persons, setPersons }) {
       axiosClient
         .Delete(id)
         .then((returnedData) => {
-          setPersons(returnedData.data);
+          // console.log(returnedData);
+          setPersons(returnedData);
         })
         .catch((err) => {
           console.log(err);
