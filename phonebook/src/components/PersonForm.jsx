@@ -48,7 +48,13 @@ export default function PersonForm({
             }, 3000);
           })
           .catch((err) => {
-            console.log(err);
+            // console.log(err);
+            setErrorMessage(`${findName.name} is already deleted`);
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 3000);
+            // console.log(persons.filter((person) => person.id !== findName.id));
+            setPersons(persons.filter((person) => person.id !== findName.id));
           });
         setNewName("");
         setNewNumber("");

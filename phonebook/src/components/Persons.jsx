@@ -1,21 +1,29 @@
 import React from "react";
 import axiosClient from "../services/axiosClient";
 
-export default function Persons({ keyWord, persons, setPersons }) {
+export default function Persons({
+  keyWord,
+  persons,
+  setPersons,
+  setErrorMessage,
+}) {
   const personsToShow = !keyWord
     ? persons
     : persons.filter((person) =>
         person.name.toLowerCase().includes(`${keyWord.toLowerCase()}`)
       );
 
-  const handleDelete = (e, id) => {
+  const handleDelete = (e, person) => {
     const confirmed = window.confirm("Do you really want to delete?");
     if (confirmed) {
       axiosClient
-        .Delete(id)
+        .Delete(person.id)
         .then((returnedData) => {
-          // console.log(returnedData);
           setPersons(returnedData);
+          setErrorMessage(`${person.name} is  deleted`);
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 3000);
         })
         .catch((err) => {
           console.log(err);
@@ -32,9 +40,7 @@ export default function Persons({ keyWord, persons, setPersons }) {
               <p style={{ margin: "0px" }}>
                 {person.name} {person.number}
               </p>
-              <button onClick={(e) => handleDelete(e, person.id)}>
-                Delete
-              </button>
+              <button onClick={(e) => handleDelete(e, person)}>Delete</button>
             </div>
           );
         })}
