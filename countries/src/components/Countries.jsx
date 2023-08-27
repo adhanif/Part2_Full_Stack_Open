@@ -1,6 +1,7 @@
 import React from "react";
 import Country from "./Country";
 import { useState } from "react";
+import Weather from "./Weather";
 
 export default function Countries({ countries, countryQuery }) {
   const [selectedCountryIndex, setSelectedCountryIndex] = useState(null);
@@ -28,8 +29,9 @@ export default function Countries({ countries, countryQuery }) {
       ) : countryQuery && countriesToShow.length === 1 ? (
         countriesToShow.map((country) => {
           return (
-            <div className="country" key={country.name.common}>
+            <div key={country.name.common}>
               <Country country={country} />
+              <Weather country={country} />
             </div>
           );
         })
