@@ -1,6 +1,10 @@
 import React from "react";
+import Country from "./Country";
+import { useState } from "react";
 
 export default function Countries({ countries, countryQuery }) {
+  const [selectedCountryIndex, setSelectedCountryIndex] = useState(null);
+
   const countriesToShow = !countryQuery
     ? countries
     : countries.filter((country) => {
@@ -8,11 +12,39 @@ export default function Countries({ countries, countryQuery }) {
           .toLowerCase()
           .includes(`${countryQuery.toLowerCase()}`);
       });
-  //   console.log(countriesToShow);
+
+  const handleClick = (index) => {
+    if (selectedCountryIndex === index) {
+      setSelectedCountryIndex(null);
+    } else {
+      setSelectedCountryIndex(index);
+    }
+  };
+
   return (
     <div>
       {countryQuery && countriesToShow.length > 10 ? (
         <p>Too many matches, specify another filter!</p>
+      ) : countryQuery && countriesToShow.length === 1 ? (
+        countriesToShow.map((country) => {
+          return (
+            <div className="country" key={country.name.common}>
+              <Country country={country} />
+            </div>
+          );
+        })
+      ) : countryQuery && countriesToShow.length < 10 ? (
+        countriesToShow.map((country, index) => {
+          return (
+            <div key={country.name.common}>
+              <p>{country.name.common}</p>
+              <button onClick={() => handleClick(index)}>
+                {selectedCountryIndex === index ? "close" : "show"}
+              </button>
+              {selectedCountryIndex === index && <Country country={country} />}
+            </div>
+          );
+        })
       ) : (
         countriesToShow.map((country) => {
           return (
@@ -22,24 +54,6 @@ export default function Countries({ countries, countryQuery }) {
           );
         })
       )}
-      {countryQuery && countriesToShow.length === 1
-        ? countriesToShow.map((country) => {
-            return (
-              <div key={country.name.common}>
-                <h1>{country.name.common}</h1>
-                <p>capital {country.capital}</p>
-                <p>capital {country.area}</p>
-                <h1>languages:</h1>
-                <ul>
-                  {Object.values(country.languages).map((language, index) => (
-                    <li key={index}>{language}</li>
-                  ))}
-                </ul>
-                <img src={country.flags.png} alt="" />
-              </div>
-            );
-          })
-        : null}
     </div>
   );
 }
