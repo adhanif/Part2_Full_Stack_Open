@@ -33,7 +33,7 @@ export default function Weather({ country }) {
           <p>wind {weatherData.wind.speed} m/s</p>
         </div>
       ) : (
-        <p>Loading IP data...</p>
+        <p>Loading data...</p>
       )}
     </div>
   );
